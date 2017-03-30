@@ -128,6 +128,7 @@ public class World
             }
             ball.vy = -ball.vy;
             ball.y = paddle.y - Ball.HEIGHT -1;
+            collisionListener.collisionPaddle();
             return;
         }
 
@@ -136,6 +137,7 @@ public class World
         {
             ball.vy = - ball.vy;
             ball.y = paddle.y - Ball.HEIGHT -1;
+            collisionListener.collisionPaddle();
 
         }
     }
