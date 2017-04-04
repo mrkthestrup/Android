@@ -46,6 +46,7 @@ public abstract class GameEngine extends Activity implements Runnable, SensorEve
     private SoundPool soundPool;
     private int framesPerSecond = 0;
     private Paint paint = new Paint();
+    public Music music;
 
     public abstract Screen createStartScreen();
 

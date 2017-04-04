@@ -13,6 +13,8 @@ public class World
     public static final float MAX_Y =479;
 
     int points = 0;
+    int paddleHits = 0;
+    int blockAdvance = 0;
     CollisionListener collisionListener;
 
     boolean gameOver = false;
@@ -36,9 +38,11 @@ public class World
         if (blockArrayList.size() == 0)
         {
             generateBlocks();
+            ball.x = 160;                                                                           //reset the ball position, so it doesnt start at top
+            ball.y = 240;                                                                           //reset the ball position, so it doesnt start at top when clar the first lvl
         }
-        ball.x = ball.x + ball.vx * deltaTime;
-        ball.y = ball.y + ball.vy * deltaTime;
+        ball.x = ball.x + ball.vx * deltaTime;                                                      //move the ball in x direction
+        ball.y = ball.y + ball.vy * deltaTime;                                                      //move the ball in y direction
 
         //if ball hits the sites, it have to bounce back
         if (ball.x < MIN_X)
@@ -63,10 +67,12 @@ public class World
         }
 
         //buttom
-        if (ball.y > MAX_Y - Ball.HEIGHT)
+        if (ball.y > MAX_Y - Ball.HEIGHT)                                                           //did the ball go below the paddle and out the button of screen
         {
             gameOver = true;
-            return;
+            game.music.stop();
+            collisionListener.collisionOutOfScreen();                                               //gameover Sound
+            return;                                                                                 //don't check anything more, just return to screen with gameOver
         }
 
         //touch, only for testing, well be deleting later
@@ -116,6 +122,7 @@ public class World
             ball.vy = -ball.vy;
             ball.y = paddle.y - Ball.HEIGHT -1;
             collisionListener.collisionPaddle();
+            advanceBlocks();
             return;
         }
 
@@ -129,6 +136,7 @@ public class World
             ball.vy = -ball.vy;
             ball.y = paddle.y - Ball.HEIGHT -1;
             collisionListener.collisionPaddle();
+            advanceBlocks();
             return;
         }
 
@@ -138,7 +146,25 @@ public class World
             ball.vy = - ball.vy;
             ball.y = paddle.y - Ball.HEIGHT -1;
             collisionListener.collisionPaddle();
+            advanceBlocks();
+        }
+    }
 
+    private void advanceBlocks()
+    {
+        paddleHits++;
+        if (paddleHits == 10)                                                                       //moving the block down when ball hit the paddle 10 times
+        {
+            paddleHits = 0;
+            blockAdvance = blockAdvance + 10;
+
+            int stop = blockArrayList.size();
+            Block block = null;
+                for (int i = 0; i < stop; i++)
+                {
+                    block = blockArrayList.get(i);
+                    block.y = block.y + blockAdvance;
+                }
         }
     }
 

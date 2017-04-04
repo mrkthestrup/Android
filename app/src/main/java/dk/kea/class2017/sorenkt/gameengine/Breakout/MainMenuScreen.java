@@ -11,7 +11,6 @@ public class MainMenuScreen extends Screen
 
     Bitmap mainMenuBackground;
     Bitmap insertCoin;
-    Music music;
     long startTime = System.nanoTime();
     float passedTime = 0;
 
@@ -22,9 +21,7 @@ public class MainMenuScreen extends Screen
         super(game);
         mainMenuBackground = game.loadBitmap("mainmenu.png");
         insertCoin = game.loadBitmap("insertcoin.png");
-        music = game.loadMusic("music.ogg");
-        music.setLooping(true);
-        music.play();
+        //game.music.pause(); //just a test
     }
 
     //game logic fits here!
@@ -33,6 +30,7 @@ public class MainMenuScreen extends Screen
     {
         if (game.isTouchDown(0))
         {
+            game.music.play();
             game.setScreen(new GameScreen(game)); // create a new GameScreen with the game object and then go to it
             return;
         }

@@ -7,14 +7,15 @@ public class MyCollisionListener implements CollisionListener
     Sound wallSound;
     Sound paddleSound;
     Sound blockSound;
+    Sound gameOverSound;
 
     //construktor
-    public MyCollisionListener(Sound wallSound, Sound paddleSound, Sound blockSound)
+    public MyCollisionListener(Sound wallSound, Sound paddleSound, Sound blockSound, Sound gameOverSound)
     {
         this.wallSound = wallSound;
         this.paddleSound = paddleSound;
         this.blockSound = blockSound;
-
+        this.gameOverSound = gameOverSound;
     }
 
     @Override
@@ -34,5 +35,11 @@ public class MyCollisionListener implements CollisionListener
     public void collisionBlock()
     {
         blockSound.play(1);
+    }
+
+    @Override
+    public void collisionOutOfScreen()
+    {
+        gameOverSound.play(1);
     }
 }
